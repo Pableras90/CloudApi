@@ -12,7 +12,7 @@ app.get("/api/houses", async (req, res) => {
   res.send(houseList);
 });
 
-app.get("/api/books/:id", async (req, res) => {
+app.get("/api/houses/:id", async (req, res) => {
   const { id } = req.params;
   const houseId = Number(id);
   const house = await getHouse(houseId);
