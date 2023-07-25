@@ -1,23 +1,25 @@
 import express from "express";
-import { getHouseList, getHouse } from "./mock-db.js";
+import { housesApi } from "./houses.api.js";
+import path from "path";
+import url from "url";
 
 const app = express();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("My houses list");
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+app.use("/", express.static(path.resolve(__dirname, "../public")));
+
+app.use(async (req, res, next) => {
+  console.log(req.url);
+  next();
+});
+app.use("/api/houses", housesApi);
+
+app.use(async (error, req, res, next) => {
+  console.error(error);
+  res.sendStatus(500);
 });
 
-app.get("/api/houses", async (req, res) => {
-  const houseList = await getHouseList();
-  res.send(houseList);
-});
-
-app.get("/api/houses/:id", async (req, res) => {
-  const { id } = req.params;
-  const houseId = Number(id);
-  const house = await getHouse(houseId);
-  res.send(house);
-});
 app.listen(3000, () => {
   console.log("Server ready at port 3000");
 });
