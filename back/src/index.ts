@@ -1,9 +1,12 @@
 import express from "express";
-import cookieParser from "cookie-parser";
 import { housesApi } from "#pods/house/index.js";
 import path from "path";
 import url from "url";
-import { createRestApiServer } from "#core/servers/index.js";
+import {
+  createRestApiServer,
+  connectToDBServer,
+  db,
+} from "#core/servers/index.js";
 import { envConstants } from "#core/constants/index.js";
 import "#core/load-env.js";
 const restApiServer = createRestApiServer();
@@ -22,6 +25,12 @@ restApiServer.use(async (error, req, res, next) => {
   res.sendStatus(500);
 });
 
-restApiServer.listen(envConstants.PORT, () => {
+restApiServer.listen(envConstants.PORT, async () => {
+  if (!envConstants.isApiMock) {
+    await connectToDBServer(envConstants.MONGODB_URI);
+    await db.collection("airbnb").insertOne({ name: "House 1" });
+  } else {
+    console.log("Running API mock");
+  }
   console.log(`Server ready at port ${envConstants.PORT}`);
 });
