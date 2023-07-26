@@ -14,7 +14,7 @@ export const mapHouseListFromModelToApi = (
 ): apiModel.House[] => houseList.map(mapHouseFromModelToApi);
 
 
-const mapReviewFromModelToApi = (review: model.Review): apiModel.Review => ({
+export const mapReviewFromModelToApi = (review: model.Review): apiModel.Review => ({
     reviewerName: review.reviewerName,
     content: review.content,
     rating: review.rating,

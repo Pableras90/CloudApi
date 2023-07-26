@@ -1,11 +1,9 @@
 import { Router } from "express";
-import { getHouse, insertReview } from "../../mock-db.js";
 import { houseRepository } from "#dals/index.js";
 import {
   mapHouseListFromModelToApi,
-  mapHouseFromApiToModel,
-  mapReviewFromApiToModel,
   mapHouseFromModelToApi,
+  mapReviewFromModelToApi
 } from "./house.mappers.js";
 export const housesApi = Router();
 
@@ -14,36 +12,23 @@ housesApi
     try {
       const page = Number(req.query.page);
       const pageSize = Number(req.query.pageSize);
-      let houseList = await houseRepository.getHouseList();
-      if (page && pageSize) {
-        const startIndex = (page - 1) * pageSize;
-        const endIndex = Math.min(startIndex + pageSize, houseList.length);
-        houseList = houseList.slice(startIndex, endIndex);
-      }
-      res.send(mapHouseListFromModelToApi);
+      const houseList = await houseRepository.getHouseList(page, pageSize);
+      res.send(mapHouseListFromModelToApi(houseList));
     } catch (error) {
       next(error);
     }
   })
-  .get("/:id", async (req, res) => {
+  .get("/:id", async (req, res, next) => {
     const { id } = req.params;
-    const houseId = Number(id);
-    const house = await getHouse(houseId);
-    res.cookie("my-cookie", "my-token", {
-      sameSite: "none",
-      secure: true,
-    });
-    res.send(house);
+  
+    const house = await houseRepository.getHouse(Number(id));
+    res.send(mapHouseFromModelToApi(house));
   })
   .post("/", async (req, res, next) => {
     try {
       const { houseId, reviewerName, content, rating } = req.body;
-      const newReview = { reviewerName, content, rating};
-      await insertReview(
-        houseId,
-        mapReviewFromApiToModel(newReview)
-      );
-      res.status(201).send(mapHouseFromModelToApi);
+      const review = await houseRepository.addReview(houseId, reviewerName, content, rating);
+      res.status(201).send(mapReviewFromModelToApi(review));
     } catch (error) {
       next(error);
     }
