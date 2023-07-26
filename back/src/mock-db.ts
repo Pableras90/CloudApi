@@ -145,13 +145,11 @@ export const getHouse = async (id) => {
   return mockHouseList.find((house) => house.id === id);
 };
 
-export const insertHouse = async (house) => {
-  const id = mockHouseList.length + 1;
-  const newHouse = {
-    ...house,
-    id,
+export const insertReview = async (id, review) => {
+  const house = await getHouse(id);
+  const newReview = {
+    ...review
   };
-
-  mockHouseList = [...mockHouseList, newHouse];
-  return newHouse;
+  house.reviews.push(newReview);
+  return newReview;
 };

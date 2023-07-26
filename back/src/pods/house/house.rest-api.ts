@@ -1,7 +1,12 @@
 import { Router } from "express";
-import { getHouse, insertHouse } from "./mock-db.js";
+import { getHouse, insertReview } from "../../mock-db.js";
 import { houseRepository } from "#dals/index.js";
-
+import {
+  mapHouseListFromModelToApi,
+  mapHouseFromApiToModel,
+  mapReviewFromApiToModel,
+  mapHouseFromModelToApi,
+} from "./house.mappers.js";
 export const housesApi = Router();
 
 housesApi
@@ -15,7 +20,7 @@ housesApi
         const endIndex = Math.min(startIndex + pageSize, houseList.length);
         houseList = houseList.slice(startIndex, endIndex);
       }
-      res.send(houseList);
+      res.send(mapHouseListFromModelToApi);
     } catch (error) {
       next(error);
     }
@@ -30,8 +35,16 @@ housesApi
     });
     res.send(house);
   })
-  .post("/", async (req, res) => {
-    const house = req.body;
-    const newHouse = await insertHouse(house);
-    res.status(201).send(newHouse);
+  .post("/", async (req, res, next) => {
+    try {
+      const { houseId, reviewerName, content, rating } = req.body;
+      const newReview = { reviewerName, content, rating};
+      await insertReview(
+        houseId,
+        mapReviewFromApiToModel(newReview)
+      );
+      res.status(201).send(mapHouseFromModelToApi);
+    } catch (error) {
+      next(error);
+    }
   });

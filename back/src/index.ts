@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { housesApi } from "./houses.api.js";
+import { housesApi } from "#pods/house/index.js";
 import path from "path";
 import url from "url";
 import { createRestApiServer } from "#core/servers/index.js";
