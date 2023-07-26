@@ -1,6 +1,6 @@
 import { Router } from "express";
-
-import { getHouseList, getHouse, insertHouse } from "./mock-db.js";
+import { getHouse, insertHouse } from "./mock-db.js";
+import { houseRepository } from "#dals/index.js";
 
 export const housesApi = Router();
 
@@ -9,7 +9,7 @@ housesApi
     try {
       const page = Number(req.query.page);
       const pageSize = Number(req.query.pageSize);
-      let houseList = await getHouseList();
+      let houseList = await houseRepository.getHouseList();
       if (page && pageSize) {
         const startIndex = (page - 1) * pageSize;
         const endIndex = Math.min(startIndex + pageSize, houseList.length);

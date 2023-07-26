@@ -12,6 +12,5 @@ export const createRestApiServer = () => {
         credentials: true,
       })
     );
-  
     return restApiServer;
   };

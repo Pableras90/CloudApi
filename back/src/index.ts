@@ -3,8 +3,9 @@ import cookieParser from "cookie-parser";
 import { housesApi } from "./houses.api.js";
 import path from "path";
 import url from "url";
-import { createRestApiServer } from "./core/servers/rest-api.server.js";
-import { envConstants } from "./core/constants/index.js";
+import { createRestApiServer } from "#core/servers/index.js";
+import { envConstants } from "#core/constants/index.js";
+import "#core/load-env.js";
 const restApiServer = createRestApiServer();
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
