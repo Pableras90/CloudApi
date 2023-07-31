@@ -4,8 +4,7 @@ import path from "path";
 import url from "url";
 import {
   createRestApiServer,
-  connectToDBServer,
-  db,
+  connectToDBServer
 } from "#core/servers/index.js";
 import { envConstants } from "#core/constants/index.js";
 import "#core/load-env.js";
@@ -28,9 +27,10 @@ restApiServer.use(async (error, req, res, next) => {
 restApiServer.listen(envConstants.PORT, async () => {
   if (!envConstants.isApiMock) {
     await connectToDBServer(envConstants.MONGODB_URI);
-    await db.collection("airbnb").insertOne({ name: "House 1" });
-  } else {
-    console.log("Running API mock");
-  }
+    console.log("Connected to DB");
+     } else {
+        console.log('Running API mock');
+    }
+
   console.log(`Server ready at port ${envConstants.PORT}`);
 });

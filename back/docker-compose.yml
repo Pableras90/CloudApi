@@ -5,3 +5,7 @@ services:
     image: mongo:5.0
     ports:
       - '27018:27017'
+    volumes:
+      - type: bind
+        source: ./mongo-data
+        target: /data/db

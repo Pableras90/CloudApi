@@ -1,4 +1,5 @@
 import { House,Review,Amenity } from "./house/house.model.js";
+import { ObjectId } from "mongodb";
 
 export interface DB{
     houses:House[];
@@ -7,7 +8,7 @@ export interface DB{
 export const db:DB={
     houses:[
         {
-            id: 1,
+          _id: new ObjectId(),
             description: "Casa Rural Malaga",
             address: "Calle Primavera, 123, Malaga",
             amenities: {
@@ -30,7 +31,7 @@ export const db:DB={
             ],
           },
           {
-            id: 2,
+            _id: new ObjectId(),
             description: "Casa Rural Tomelloso",
             address: "Avenida del Sol, 456, Tomelloso",
             amenities: {
@@ -53,7 +54,7 @@ export const db:DB={
             ],
           },
           {
-            id: 3,
+            _id: new ObjectId(),
             description: "Casa de campo Jaen",
             address: "Calle del Olivo, 789, Jaen",
             amenities: {
@@ -75,7 +76,7 @@ export const db:DB={
             ],
           },
           {
-            id: 4,
+            _id: new ObjectId(),
             description: "Casa con piscina",
             address: "Calle del Lago, 101, Ciudad del Agua",
             amenities: {
@@ -98,7 +99,7 @@ export const db:DB={
             ],
           },
           {
-            id: 5,
+            _id: new ObjectId(),
             description: "Apartamento con jardin",
             address: "Calle de la Luna, 222, Pueblo Tranquilo",
             amenities: {
@@ -121,7 +122,7 @@ export const db:DB={
             ],
           },
           {
-            id: 6,
+            _id: new ObjectId(),
             description: "Duplex en pleno centro",
             address: "Avenida Central, 333, Ciudad Central",
             amenities: {

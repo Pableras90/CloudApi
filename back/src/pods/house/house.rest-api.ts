@@ -6,6 +6,7 @@ import {
   mapReviewFromModelToApi
 } from "./house.mappers.js";
 export const housesApi = Router();
+import { ObjectId } from "mongodb";
 
 housesApi
   .get("/", async (req, res, next) => {
@@ -21,7 +22,7 @@ housesApi
   .get("/:id", async (req, res, next) => {
     const { id } = req.params;
   
-    const house = await houseRepository.getHouse(Number(id));
+    const house = await houseRepository.getHouse(new ObjectId(id));;
     res.send(mapHouseFromModelToApi(house));
   })
   .post("/", async (req, res, next) => {
