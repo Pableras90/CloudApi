@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 export interface House {
-    _id: ObjectId;
+    _id: string;
     description: string;
     address: string;
     amenities: Amenity;

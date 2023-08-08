@@ -26,13 +26,11 @@ const updateHouse = async (house: House) => {
 export const mockRepository: HouseRepository = {
   getHouseList: async (page?: number, pageSize?: number)=>
   paginatedHouseList(db.houses, page, pageSize),
-  getHouse: async (id: ObjectId) => {
-    const houseId = new ObjectId(id);
-    return db.houses.find((h) => h._id.equals(houseId));
+  getHouse: async (houseId: string) => {
+    return db.houses.find((h) => h._id === houseId);
   },
-  addReview: async (id: ObjectId, reviewerName: string, content: string, rating: number) => {
-    const houseId = new ObjectId(id);
-    const house = db.houses.find((h) => h._id.equals(houseId));
+  addReview: async (houseId: string, reviewerName: string, content: string, rating: number) => {
+    const house = db.houses.find((h) => h._id === houseId);
     if (house) {
       const dateReview = new Date();
       const newReview: Review = {

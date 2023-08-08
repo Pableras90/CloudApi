@@ -8,7 +8,7 @@ export interface DB{
 export const db:DB={
     houses:[
         {
-          _id: new ObjectId(),
+          _id: new ObjectId().toHexString(),
             description: "Casa Rural Malaga",
             address: "Calle Primavera, 123, Malaga",
             amenities: {
@@ -31,7 +31,7 @@ export const db:DB={
             ],
           },
           {
-            _id: new ObjectId(),
+            _id: new ObjectId().toHexString(),
             description: "Casa Rural Tomelloso",
             address: "Avenida del Sol, 456, Tomelloso",
             amenities: {
@@ -54,7 +54,7 @@ export const db:DB={
             ],
           },
           {
-            _id: new ObjectId(),
+            _id: new ObjectId().toHexString(),
             description: "Casa de campo Jaen",
             address: "Calle del Olivo, 789, Jaen",
             amenities: {
@@ -76,7 +76,7 @@ export const db:DB={
             ],
           },
           {
-            _id: new ObjectId(),
+            _id: new ObjectId().toHexString(),
             description: "Casa con piscina",
             address: "Calle del Lago, 101, Ciudad del Agua",
             amenities: {
@@ -99,7 +99,7 @@ export const db:DB={
             ],
           },
           {
-            _id: new ObjectId(),
+            _id: new ObjectId().toHexString(),
             description: "Apartamento con jardin",
             address: "Calle de la Luna, 222, Pueblo Tranquilo",
             amenities: {
@@ -122,7 +122,7 @@ export const db:DB={
             ],
           },
           {
-            _id: new ObjectId(),
+            _id: new ObjectId().toHexString(),
             description: "Duplex en pleno centro",
             address: "Avenida Central, 333, Ciudad Central",
             amenities: {
