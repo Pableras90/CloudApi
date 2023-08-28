@@ -1,18 +1,18 @@
 import { HouseRepository } from "./house.repository.js";
-import { House,Review } from "../house.model.js";
+import { House, Review } from "../house.model.js";
 import { ObjectId, WithId } from "mongodb";
 import { db } from "#core/servers/index.js";
 
-
-const updateHouse = async (house: House) =>{
-  const value = await db.collection<House>("listingsAndReviews").findOneAndUpdate(
-    { _id: house._id },
-    { $set: house },
-    { upsert: true, returnDocument: 'after' }
-  )
+const updateHouse = async (house: House) => {
+  const value = await db
+    .collection<House>("listingsAndReviews")
+    .findOneAndUpdate(
+      { _id: house._id },
+      { $set: house },
+      { upsert: true, returnDocument: "after" }
+    );
   return value;
-}
-
+};
 
 export const dbRepository: HouseRepository = {
   getHouseList: async (page?: number, pageSize?: number) => {
@@ -26,32 +26,25 @@ export const dbRepository: HouseRepository = {
       .toArray();
   },
   getHouse: async (id: string) => {
-    const  value  = await db.collection<House>("listingsAndReviews").findOne({
+    const value = await db.collection<House>("listingAndReviews").findOne({
       _id: id,
     });
     console.log(value);
     return value;
   },
-  addReview: async (
-    id: string,
-    reviewerName: string,
-    content: string,
-    rating: number
-  ) => {
-    const house = await db.collection<House>("listingsAndReviews").findOne({
-      _id: id,});
-    if (house) {
-      const dateReview = new Date();
-      const newReview: Review = {
-        reviewerName,
-        content,
-        rating,
-        dateReview
-      };
-
-      house.reviews.push(newReview);
-      await updateHouse(house);
+  addReview: async (id: string, review: Review) => {
+    const dateReview = new Date();
+    const newReview: Review = {
+      ...review,
+      dateReview,
+    };
+    const result = await db
+      .collection<House>("listingAndReviews")
+      .updateOne({ _id: id }, { $push: { reviews: newReview } });
+    if (result.matchedCount > 0) {
       return newReview;
-  }
-}
-}
+    }
+
+    throw new Error("House not found");
+  },
+};

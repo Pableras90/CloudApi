@@ -22,15 +22,23 @@ housesApi
     }
   })
   .get("/:id", async (req, res, next) => {
-    const { id } = req.params;
-  
-    const house = await houseRepository.getHouse(id);;
-    res.send(mapHouseFromModelToApi(house));
-  })
-  .post("/", async (req, res, next) => {
     try {
-      const { houseId, reviewerName, content, rating } = req.body;
-      const review = await houseRepository.addReview(houseId, reviewerName, content, rating);
+      const { id } = req.params;
+      const house = await houseRepository.getHouse(id);
+      res.send(mapHouseFromModelToApi(house));
+    } catch (error) {
+      next(error);
+    }
+  })
+  .post("/:id/reviews", async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { reviewerName, content, rating } = req.body;
+      const review = await houseRepository.addReview(id, {
+        reviewerName,
+        content,
+        rating,
+      });
       res.status(201).send(mapReviewFromModelToApi(review));
     } catch (error) {
       next(error);

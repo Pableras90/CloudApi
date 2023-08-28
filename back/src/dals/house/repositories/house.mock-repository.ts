@@ -29,14 +29,12 @@ export const mockRepository: HouseRepository = {
   getHouse: async (houseId: string) => {
     return db.houses.find((h) => h._id === houseId);
   },
-  addReview: async (houseId: string, reviewerName: string, content: string, rating: number) => {
-    const house = db.houses.find((h) => h._id === houseId);
+  addReview: async (id: string, review:Review) => {
+    const house = db.houses.find((h) => h._id === id);
     if (house) {
       const dateReview = new Date();
       const newReview: Review = {
-        reviewerName,
-        content,
-        rating,
+        ...review,
         dateReview
       };
 
