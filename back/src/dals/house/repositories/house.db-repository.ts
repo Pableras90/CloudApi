@@ -26,7 +26,7 @@ export const dbRepository: HouseRepository = {
       .toArray();
   },
   getHouse: async (id: string) => {
-    const value = await db.collection<House>("listingAndReviews").findOne({
+    const value = await db.collection<House>("listingsAndReviews").findOne({
       _id: id,
     });
     console.log(value);
@@ -39,7 +39,7 @@ export const dbRepository: HouseRepository = {
       dateReview,
     };
     const result = await db
-      .collection<House>("listingAndReviews")
+      .collection<House>("listingsAndReviews")
       .updateOne({ _id: id }, { $push: { reviews: newReview } });
     if (result.matchedCount > 0) {
       return newReview;
