@@ -30,16 +30,16 @@ housesApi
       next(error);
     }
   })
-  .post("/:id/reviews", async (req, res, next) => {
+  .patch("/:id/reviews", async (req, res, next) => {
     try {
       const { id } = req.params;
       const { reviewerName, content, rating } = req.body;
-      const review = await houseRepository.addReview(id, {
+      await houseRepository.addReview(id, {
         reviewerName,
         content,
         rating,
       });
-      res.status(201).send(mapReviewFromModelToApi(review));
+      res.status(201);
     } catch (error) {
       next(error);
     }

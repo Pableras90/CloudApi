@@ -33,18 +33,10 @@ export const dbRepository: HouseRepository = {
     return value;
   },
   addReview: async (id: string, review: Review) => {
-    const dateReview = new Date();
-    const newReview: Review = {
-      ...review,
-      dateReview,
-    };
-    const result = await db
+    const { acknowledged } = await db
       .collection<House>("listingsAndReviews")
-      .updateOne({ _id: id }, { $push: { reviews: newReview } });
-    if (result.matchedCount > 0) {
-      return newReview;
-    }
+      .updateOne({ _id: id }, { $push: { reviews: review } });
 
-    throw new Error("House not found");
+    return acknowledged;
   },
 };

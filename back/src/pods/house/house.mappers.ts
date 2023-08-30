@@ -34,10 +34,10 @@ export const mapReviewFromModelToApi = (review: model.Review): apiModel.Review =
     };
   };
 
-export const mapReviewFromApiToModel = (review: apiModel.Review): model.Review => ({
-  reviewerName: review.reviewerName,
-  content: review.content,
-  rating: review.rating,
-});
-
+  export const mapReviewFromApiToModel = (review: apiModel.Review): model.Review => ({
+    reviewerName: review.reviewerName,
+    content: review.content,
+    rating: review.rating,
+    dateReview: new Date(),
+  });
 
