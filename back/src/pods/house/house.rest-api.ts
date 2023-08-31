@@ -39,7 +39,7 @@ housesApi
         content,
         rating,
       });
-      res.status(201);
+      res.sendStatus(201);
     } catch (error) {
       next(error);
     }
