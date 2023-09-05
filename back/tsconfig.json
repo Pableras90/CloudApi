@@ -7,11 +7,14 @@
       "isolatedModules": true,
       "esModuleInterop": true,
         "baseUrl": "./src",
+        "outDir": "./dist",
   "paths": {
     "#*": ["*"]
    }
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "src/core/constants/env.constants.js"],
+    "exclude": ["src/**/*.spec.ts"]
+
   }
   
   

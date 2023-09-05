@@ -7,6 +7,6 @@ fetch('http://localhost:3000/api/houses/2',{
   .then((response) => {
     return response.json();
   })
-  .then((book) => {
-    console.log({ book });
+  .then((house) => {
+    console.log({ house });
   });
