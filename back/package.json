@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "run-p -l type-check:watch start:dev start:local-db",
+    "start": "run-p -l type-check:watch",
     "start:dev": "nodemon -r dotenv/config --esm src/index.ts",
     "start:local-db": "docker-compose up -d",
     "type-check": "tsc --noEmit --preserveWatchOutput",
