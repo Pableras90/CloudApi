@@ -1,3 +1,4 @@
+import "#core/load-env.js";
 import express from "express";
 import { housesApi } from "#pods/house/index.js";
 import path from "path";
@@ -7,7 +8,6 @@ import {
   connectToDBServer
 } from "#core/servers/index.js";
 import { envConstants } from "#core/constants/index.js";
-import "#core/load-env.js";
 const restApiServer = createRestApiServer();
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
