@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "run-p -l type-check:watch  ",
+    "start": "node index.js",
     
 
     "type-check": "tsc --noEmit --preserveWatchOutput",
