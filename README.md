@@ -58,7 +58,7 @@ Crea una nueva rama desde Visual Studio a partir de `feature/generate-builds`.
     Borra archivos innecesarios del `.json`:
         - `"devDependencies"`
 
-    Cambia los imports:
+5.  **Cambia los imports:**
    
         - "#core/*.js": "./src/core/*.js"
    
@@ -97,5 +97,55 @@ Crea una nueva rama desde Visual Studio a partir de `feature/generate-builds`.
 
 11. **Verificar Despliegue:**
     - Abre la aplicación en [https://render-manual2.onrender.com](https://render-manual2.onrender.com).
+   
 
 
+
+# Despliegue manual-mongo
+
+## Crear una Rama Nueva
+
+1. **Crear una rama nueva en Visual Studio Code llamada `feature/manual-mongo` a partir de `feature/generate-builds`.**
+
+## Despliegue de MongoDB en MongoDB Atlas
+
+2. **Instalar Dependencias:**
+    - Ejecutar `npm install` para instalar las dependencias necesarias.
+
+3. **Configuración Inicial:**
+    - Asegurarse de que la aplicación esté desplegada en en modo API mock y funcione correctamente.
+
+4. **Desplegar MongoDB en MongoDB Atlas:**
+    - Ingresar a MongoDB Atlas y seguir los siguientes pasos:
+
+        a. Crear un clúster gratuito.
+        b. Seleccionar el proveedor y la región.
+        c. Seleccionar el nivel del clúster, en este caso, M0 Sandbox (nivel gratuito sin copias de seguridad).
+        d. Dar un nombre (opcional) y crear el clúster.
+
+5. **Configuración del Clúster en MongoDB Atlas:**
+    - Acceder a la página principal del clúster, donde se verá:
+
+        a. Configuración de acceso a la red.
+        b. Configuración de acceso a la base de datos.
+        c. URI de conexión de MongoDB.
+
+6. **Configuración de Acceso a la Red en MongoDB Atlas:**
+    - Añadir una nueva regla para permitir todas las IPs.
+
+7. **Configuración de Acceso a la Base de Datos en MongoDB Atlas:**
+    - Configurar un nuevo usuario con los privilegios necesarios.
+    - Copiar la contraseña generada automáticamente.
+
+8. **Actualizar Variable de Entorno en Local:**
+    - Actualizar la variable de entorno `MONGODB_URI` en el archivo `.env` en la carpeta `
+
+9. **Verificar Resultados en MongoDB Atlas:**
+    - Acceder a MongoDB Atlas y verificar que los datos se hayan insertado correctamente.
+10. **Actualizar Variables de Entorno en Render:**
+    - Actualizar las variables de entorno en Render utilizando la URI de conexión de MongoDB Atlas.
+      
+11. **Subir la web-service como el anterior caso y verificar despliegue.
+
+    - Abre la aplicación en: https://mongo-manual.onrender.com/
+    
