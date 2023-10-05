@@ -98,6 +98,8 @@ Creamos una nueva rama desde Visual Studio a partir de `feature/generate-builds`
 11. **Verificar Despliegue:**
     - Abrimos la aplicación en [https://render-manual2.onrender.com](https://render-manual2.onrender.com).
    
+      ----
+   
 
 
 
@@ -147,7 +149,7 @@ Creamos una nueva rama desde Visual Studio a partir de `feature/generate-builds`
       
 11. **Subir la web-service como el anterior caso y verificar despliegue.
 
-    - Abre la aplicación en: https://mongo-manual.onrender.com/
+    - Abrimos la aplicación en: https://mongo-manual.onrender.com/
     
 
 
@@ -159,25 +161,25 @@ A continuación, se describen los pasos para configurar un despliegue automátic
 
 Primero, crearemos un Dockerfile para definir el entorno de ejecución de nuestra aplicación. Abre tu editor de texto y crea un archivo llamado Dockerfile en la raíz de tu proyecto con el siguiente contenido:
 
-```dockerfile
+
 # Utilizamos la imagen de node en su versión 18 con Alpine como base.
-FROM node:18-alpine
+```FROM node:18-alpine```
 
 # Creamos el directorio donde copiaremos nuestra aplicación.
-RUN mkdir -p /usr/app
-WORKDIR /usr/app
+```RUN mkdir -p /usr/app```
+```WORKDIR /usr/app```
 
 # Copiamos todos los archivos de la aplicación al contenedor.
-COPY ./ ./
+```COPY ./ ./```
 
 # Ejecutamos las instalaciones y la construcción.
-RUN npm ci
-RUN npm run build
+```RUN npm ci```
+```RUN npm run build```
 
 # Establecemos algunas variables de entorno.
-ENV PORT=3000
-ENV STATIC_FILES_PATH=./public
-ENV API_MOCK=true
+```ENV PORT=3000```
+```ENV STATIC_FILES_PATH=./public```
+```ENV API_MOCK=true```
 
 # Instalamos jq y actualizamos las importaciones en el package.json.
 RUN apk update && apk add jq
@@ -187,6 +189,7 @@ RUN updatedImports="$(jq '.imports[]|=sub("./src"; "./dist")' ./package.json)" &
 
 .dockerignore
 Crearemos un archivo .dockerignore para especificar qué archivos y carpetas no deben incluirse en la imagen de Docker. Crea un archivo llamado .dockerignore en la raíz de tu proyecto con el siguiente contenido:
+~~~
 node_modules
 dist
 mongo-data
@@ -201,22 +204,29 @@ docker-compose.yml
 globalConfig.json
 jest-mongodb-config.js
 
+~~~
 
 Construir y Desplegar en Render
 En la terminal, ejecutamos los siguientes comandos para construir la imagen de Docker y desplegarla en Render:
 
-bash
-Copy code
 # Construir la imagen de Docker
-docker build -t nombre-de-tu-app:1 .
+```docker build -t nombre-de-tu-app:1 .```
 
-# Detener y eliminar contenedor existente (si lo hay)
-docker stop nombre-contenedor
-docker container rm nombre-contenedor
 
 # Ejecutar la aplicación en un nuevo contenedor
-docker run --name nombre-contenedor --rm -d -p 3001:3000 nombre-de-tu-app:1
-Estos comandos construirán la imagen de Docker y ejecutarán la aplicación en un contenedor.
+```docker run --name nombre-contenedor --rm -d -p 3001:3000 nombre-de-tu-app:1```
+
+## Configuración en Render
+### Para configurar el despliegue automático en Render, sigue estos pasos:
+
+- Crea un nuevo servicio web en Render.
+- Conecta el repositorio de GitHub y selecciona la rama correspondiente.
+- Configura el entorno de ejecución en Render y asegúrate de agregar las variables de entorno necesarias (PORT, STATIC_FILES_PATH, API_MOCK) en la configuración de Render.
+- Configura la ruta del Dockerfile:
+~~~
+./Dockerfile
+~~~
 
 
 
+Verifica el despliegue en: [https://auto-render-deploy-f58y.onrender.com](https://auto-render-deploy-f58y.onrender.com)
